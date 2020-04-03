@@ -1,0 +1,11 @@
+<div class="card" *ngIf="selectedHero">
+    <div class="card-body">
+    <app-single-hero [hero]="selectedHero"></app-single-hero>
+    </div>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero" >
+    <span class="badge">{{hero.id}}</span> {{hero.name}}</li>
+
+</ul>
