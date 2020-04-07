@@ -1,11 +1,62 @@
-<div class="card" *ngIf="selectedHero">
-    <div class="card-body">
-    <app-single-hero [hero]="selectedHero"></app-single-hero>
+<div class="container row mb-2">
+  <div class="col-md-4">
+    <ul class="heroes">
+      <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}</li>
+    </ul>
+  </div>
+  <div class="col-md-4">
+
+    <div class="card" *ngIf="selectedHero">
+      <div class="card-body">
+        <app-single-hero [hero]="selectedHero"></app-single-hero>
+      </div>
     </div>
+  </div>
 </div>
 
-<ul class="heroes">
-  <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero" >
-    <span class="badge">{{hero.id}}</span> {{hero.name}}</li>
+<button type="button" class="btn btn-primary add-hero" data-toggle="modal" data-target="#createHeroModal">
+  Add new hero
+</button>
 
-</ul>
+<div id="createHeroModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new hero</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form (ngSubmit)="onSubmit(heroForm.value)" #heroForm="ngForm">
+      <div class="modal-body">
+
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                 required
+                 [(ngModel)]="newHeroName" name="name"
+                 #name="ngModel">
+          <div [hidden]="name.valid || name.pristine"
+               class="alert alert-danger">
+            Name is required
+          </div>
+        </div>
+
+
+    <!--    <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+        <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+-->
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-create-hero"  [disabled]="!heroForm.form.valid">Save changes</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
